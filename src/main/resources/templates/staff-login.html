@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Staff Login</title>
+
+    <style>
+        /* Page layout */
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fa;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Card container */
+        .card {
+            width: 360px;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        h2 {
+            margin: 0 0 6px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 18px;
+        }
+
+        /* Inputs */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #cfd6e0;
+            font-size: 14px;
+            box-sizing: border-box;
+            background: #f7f9fc;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1976d2;
+            background: #fff;
+        }
+
+        /* Remember row: two columns, right-aligned label */
+        .row-between {
+            display: flex;
+            align-items: center;       /* vertically center checkbox row */
+            justify-content: space-between;
+            margin: 6px 0 12px;
+            min-height: 24px;          /* stable height */
+        }
+
+        .remember {
+            display: inline-flex;       /* keep checkbox + text on one line */
+            align-items: center;        /* vertically center checkbox + text */
+            gap: 8px;
+            font-size: 13px;
+            user-select: none;
+            color: #333;
+        }
+
+        .remember input[type="checkbox"] {
+            margin: 0;                  /* remove default offset */
+            transform: translateY(0);   /* guard against baseline shift */
+        }
+
+        /* Primary button */
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background: #1976d2;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+
+        /* Links row */
+        .links {
+            margin-top: 12px;
+            font-size: 13px;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: #1976d2;
+        }
+
+        /* Messages */
+        .msg-ok {
+            color: #0f5132;
+            background: #d1e7dd;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-align: left;
+        }
+
+        .msg-err {
+            color: #842029;
+            background: #f8d7da;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+<div class="card">
+    <h2>Staff Login</h2>
+    <div class="subtitle">Login using staff credentials</div>
+
+    <!-- Messages -->
+    <div th:if="${msg}" class="msg-ok" th:text="${msg}">
+        You have been logged out.
+    </div>
+
+    <div th:if="${error}" class="msg-err" th:text="${error}">
+        Invalid username or password.
+    </div>
+
+    <!-- Form -->
+    <form th:action="@{/login}" method="post">
+        <!-- CSRF (safe when Spring Security CSRF is present) -->
+        <input type="hidden" th:if="${_csrf != null}"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}" />
+
+        <input type="text" name="username" placeholder="Staff username" required />
+        <input type="password" name="password" placeholder="Password" required />
+
+        <!-- Remember row: right-aligned and vertically centered -->
+        <div class="row-between">
+            <span></span>
+            <label class="remember">
+                <input type="checkbox" name="remember-me" />
+                <span>Remember me</span>
+            </label>
+        </div>
+
+        <button type="submit" class="btn-primary">Login as Staff</button>
+    </form>
+
+    <!-- ✅ Added: Register as Staff button (no other changes) -->
+    <a th:href="@{/staff/register}">
+        <button type="button"
+                class="btn-primary"
+                style="margin-top:8px; background:#ffffff; color:#1976d2; border:1px solid #1976d2;">
+            Register as Staff
+        </button>
+    </a>
+
+    <div class="links">
+        <a th:href="@{/forgot-password}">Forgot password?</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/login}">Back to User Login</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Granted</title>
+    <style>
+        body { font-family: Arial, sans-serif; background:#e8f5e9; }
+        .box { width: 480px; margin: 120px auto; padding: 24px; background:#fff; border-left: 6px solid #2e7d32;
+               box-shadow: 0 4px 10px rgba(0,0,0,.08); border-radius: 6px; }
+        h2 { color:#2e7d32; }
+    </style>
+</head>
+<body>
+<div class="box">
+    <h2>Access Granted ✅</h2>
+    <p>Welcome, <strong th:text="${username}">User</strong>! You have successfully logged in.</p>
+    <p><a th:href="@{/login}">Log out / Back to Login</a></p>
+</div>
+</body>
+</html>

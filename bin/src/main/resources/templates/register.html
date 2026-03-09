@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fa;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card {
+            width: 360px;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 18px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid #cfd6e0;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1976d2;
+        }
+
+        .field-error {
+            text-align: left;
+            color: #c62828;
+            font-size: 12px;
+            margin-top: -6px;
+            margin-bottom: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background: #1976d2;
+            border: none;
+            color: white;
+            font-size: 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+
+        .btn-outline {
+            width: 100%;
+            padding: 8px;
+            margin-top: 10px;
+            font-size: 13px;
+            background: transparent;
+            border: 1px solid #1976d2;
+            color: #1976d2;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-outline:hover {
+            background: #e3f2fd;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Create Account</h2>
+    <div class="subtitle">Fill the details to register</div>
+
+    <form th:action="@{/register}" th:object="${user}" method="post">
+
+        <input type="text" th:field="*{username}" placeholder="Username">
+        <div class="field-error"
+             th:if="${#fields.hasErrors('username')}"
+             th:errors="*{username}">
+        </div>
+
+        <input type="email" th:field="*{email}" placeholder="Email">
+        <div class="field-error"
+             th:if="${#fields.hasErrors('email')}"
+             th:errors="*{email}">
+        </div>
+
+        <input type="password" th:field="*{password}" placeholder="Password">
+        <div class="field-error"
+             th:if="${#fields.hasErrors('password')}"
+             th:errors="*{password}">
+        </div>
+
+        <button type="submit" class="btn-primary">Register</button>
+    </form>
+
+    <a th:href="@{/login}">
+        <button class="btn-outline">Back to Login</button>
+    </a>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --ink:#1f2937;
+  --muted:#6b7280;
+  --blue:#0f3560;
+  --shadow:0 12px 30px rgba(16,24,40,.08);
+  --soft:0 6px 16px rgba(16,24,40,.06);
+  --radius:14px;
+  --radius-sm:10px;
+  --footer:#0a2540;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+}
+a{color:#1e5aa0;text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+/* App bar */
+.appbar{background:linear-gradient(180deg, #eaf2fb 0%, #e6eef8 100%);border-bottom:1px solid #dbe5f0}
+.appbar .row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.brand{display:flex;align-items:center;gap:12px;color:#0f3560;font-weight:800}
+.logo{width:46px;height:46px;border-radius:10px;background:#dfeaf7;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0f3560;box-shadow:var(--soft)}
+.dept-title{display:flex;flex-direction:column;gap:2px}
+.dept-title .h{font-size:18px;letter-spacing:.2px}
+.dept-title .s{font-size:12.5px;color:var(--muted)}
+.userbar{color:#0f3560;font-size:14px}
+
+/* Blue nav */
+.nav{background:var(--blue);border-bottom:3px solid #0b2a4a}
+.nav .container{display:flex;gap:18px;flex-wrap:wrap}
+.nav a{
+  color:#e8f0fb;padding:10px 12px;display:inline-block;font-weight:600;border-radius:6px;
+  text-decoration:none;
+}
+.nav a:hover{background:rgba(255,255,255,.08)}
+.nav a.active{background:rgba(255,255,255,.14); color:#ffffff}
+
+/* Page */
+.page{padding:22px 16px}
+h1{margin:0}
+.subhead{margin:14px 0 8px 0;color:#0f3560}
+
+/* Coordinator */
+.coord{margin:18px 0 8px 0}
+.coord-card{
+  display:flex; gap:16px; align-items:center;
+  background:var(--card); border:1px solid #e8eef6;
+  border-radius:var(--radius); padding:14px 16px; box-shadow:var(--soft);
+}
+.coord-photo{
+  width:84px; height:84px; border-radius:10px; object-fit:cover;
+  background:#f3f4f6; border:1px solid #e5e7eb;
+}
+.coord-label{font-size:12px; color:#6b7280; text-transform:uppercase; letter-spacing:.06em}
+.coord-name{margin:4px 0 4px 0}
+.coord-note{margin:0; color:#475569; font-size:14px}
+
+/* Blocks & tables */
+.block{margin-top:22px}
+.table-wrap{
+  background:var(--card); border:1px solid #e8eef6; border-radius:var(--radius-sm); box-shadow:var(--soft);
+  overflow:auto; /* horizontal scroll on small screens */
+}
+.table{width:100%; border-collapse:collapse; font-size:14px}
+.table thead th{
+  position:sticky; top:0; z-index:1;
+  background:#f1f5f9; color:#0f3560; text-align:left; font-weight:700; padding:10px;
+  border-bottom:1px solid #e2e8f0;
+}
+.table td{padding:10px; color:#334155; border-bottom:1px solid #eef2f7; vertical-align:top}
+.table tbody tr:nth-child(even){background:#fafcff}
+.table tbody tr:hover{background:#f5f8fe}
+
+/* Footer */
+.site-footer{background:var(--footer);color:#c6d7ef;margin-top:28px;padding:18px 0 28px}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+.foot-links a{color:#c6d7ef}
+.foot-links a:hover{color:#fff}
+</style>
+  <meta charset="UTF-8">
+  <title>Research – Information Technology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+</head>
+<body>
+
+  <!-- App bar -->
+  <div class="appbar">
+    <div class="container row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">IT</div>
+        <div class="dept-title">
+          <div class="h">Department of Information Technology</div>
+          <div class="s">Research • Projects • Consultancy • Patents</div>
+        </div>
+      </div>
+
+      <div class="userbar">
+        Logged in as <strong th:text="${username} ?: 'Student'">Student</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- Blue navigation -->
+  <nav class="nav">
+    <div class="container">
+      @{/home}Home</a>
+      @{/about-it}About</a>
+      @{/faculty}Faculty</a>
+      @{/research}Research</a>
+      @{/publications}Publications</a>
+      @{/timetable}Timetable</a>
+      @{/events}Events</a>
+      @{/contact}Contact</a>
+    </div>
+  </nav>
+  
+<!-- Research Coordinator -->
+<section class="coord">
+  <div class="coord-card">
+    <div class="coord-photo-wrap">
+<img src= "/images/research/vijayraj-sir.png">
+    </div>
+
+    <div class="coord-meta">
+      <div class="coord-label">Research Coordinator</div>
+      <h1 class="coord-name">DR. A. Vijayaraj</h1>
+      <p class="coord-note">
+        Leading departmental research initiatives, industry collaborations, and innovation ecosystems.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+    <!-- RESEARCH PROJECTS -->
+    <section class="block">
+      <h2>Research Projects</h2>
+
+      <!-- CAY (2024-2025) -->
+      <h3 class="subhead">CAY (2024–2025)</h3>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Title of the Project</th>
+              <th>Principal Investigator</th>
+              <th>Funding Agency</th>
+              <th>Duration</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Induction Motor Fault Diagnosis of Acoustic Signals Using Optimized EfficientNetB0 and Machine Learning Methods</td>
+              <td>Dr. M. Sheerin Banu</td>
+              <td>Nagoya Institute of Technology</td>
+              <td>2024–2026</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Multiple Fault Analysis</td>
+              <td>Dr. M. Sheerin Banu</td>
+              <td>Nagoya Institute of Technology</td>
+              <td>2024–2026</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Induction Motor Bearing Fault Analysis Using Multi-Stage Hybrid Model</td>
+              <td>Dr. M. Sheerin Banu</td>
+              <td>Nagoya Institute of Technology</td>
+              <td>2024–2026</td>
+              <td>Ongoing</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Software Solutions for Board, Bolt &amp; Beyond</td>
+              <td>Ms. Kanniga Parameswari</td>
+              <td>Apex Plywoods and Hardwares</td>
+              <td>2024–2025</td>
+              <td>Completed</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CAY m1 (2023-2024) -->
+      <h3 class="subhead">CAY m1 (2023–2024)</h3>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Title of the Project</th>
+              <th>Principal Investigator</th>
+              <th>Funding Agency</th>
+              <th>Duration</th>
+              <th>Status / Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Clean Infinity (SDG‑6)</td>
+              <td>R. Rajitha Jasmine</td>
+              <td>UBA</td>
+              <td>July 2023 – December 2024</td>
+              <td>Completed – Public benefit via easy access to smart dustbins</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Development of High‑Performance Fault Diagnostic Method using AI Techniques</td>
+              <td>Dr. M. Sheerin Banu</td>
+              <td>Nagoya Institute of Technology</td>
+              <td>2022–2024</td>
+              <td>Completed</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Smart Surveillance – Real Time Application</td>
+              <td>Ms. M. Rekha</td>
+              <td>In‑Sec Security</td>
+              <td>23.01.2024</td>
+              <td>Completed – Security Monitoring System</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- CAY m2 (2022-2023) -->
+      <h3 class="subhead">CAY m2 (2022–2023)</h3>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Title of the Project</th>
+              <th>Principal Investigator</th>
+              <th>Funding Agency</th>
+              <th>Duration</th>
+              <th>Status / Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Deep Learning Applications</td>
+              <td>Dr. M. Sheerin Banu</td>
+              <td>Rahim Dental Clinic</td>
+              <td>09.03.2023</td>
+              <td>Completed</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Real‑Time Inventory Management: A Framework for Scheduling Efficiency</td>
+              <td>Ms. R. Rajitha Jasmine</td>
+              <td>Everest Container Carrier</td>
+              <td>21.01.2023</td>
+              <td>Completed – Scheduling of container vehicles</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONSULTANCY PROJECTS -->
+    <section class="block">
+      <h2>Consultancy Projects</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Sl.No</th>
+              <th>Name of the Funding Agency</th>
+              <th>Title of the Project</th>
+              <th>Name of the Faculty</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Subbiva’s Dental Care</td><td>Clinic Automation Software</td><td>Dr. M. Sheerin Banu</td><td>Completed</td></tr>
+            <tr><td>2</td><td>8Queens Software Technologies Private</td><td>PrepareNext Web and Mobile Application</td><td>Dr. A. Vijayaraj</td><td>Completed</td></tr>
+            <tr><td>3</td><td>ULTRA AUX MARKETING</td><td>Inventory Management System</td><td>Dr. S. Selvakumani</td><td>Completed</td></tr>
+            <tr><td>4</td><td>Everest Container Carrier</td><td>Transport Automation System</td><td>Dr. R. Rajitha Jasmine</td><td>Completed</td></tr>
+            <tr><td>5</td><td>SRK Medicals</td><td>Web Design</td><td>Mr. L. Vinoth Kumar</td><td>Completed</td></tr>
+            <tr><td>6</td><td>ICONIX SOFTWARE SOLUTION</td><td>Mobile application for students’ academic marks and fees management</td><td>Dr. K. Saravanan</td><td>Completed</td></tr>
+            <tr><td>7</td><td>7 ECO TRADERS</td><td>WEBSITE DEVELOPMENT – ACCOUNTS SYSTEM</td><td>Ms. S. Shobana</td><td>Completed</td></tr>
+            <tr><td>8</td><td>RSL AGENCY</td><td>Progressive web app (PWA)</td><td>Ms. Rekha M</td><td>Completed</td></tr>
+            <tr><td>9</td><td>Saskive Technologies</td><td>Blind People Walking Stick with Object Recognition, Stick Finding and Location Sharing Voice Assistant Using AI and IoT</td><td>Dr. A. Annalakshmi</td><td>Completed</td></tr>
+            <tr><td>10</td><td>Sivagami Enterprises</td><td>Designing a Modern SEO Website</td><td>Ms. Selvi K</td><td>Completed</td></tr>
+            <tr><td>11</td><td>Iconix Software Solution</td><td>A Brute‑Force Black‑Box Method to Attack Machine Learning‑Based Systems in Cybersecurity</td><td>Mr. Nagarajan</td><td>Completed</td></tr>
+            <tr><td>12</td><td>Software Solutions for Board, Bolt &amp; Beyond</td><td>Apex Plywoods and Hardwares</td><td>Ms. M. Kanniga Parameshwari</td><td>Completed</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- PATENTS -->
+    <section class="block">
+      <h2>Patents</h2>
+
+      <!-- 2024 – 2025 -->
+      <h3 class="subhead">2024 – 2025</h3>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Title of the patent application</th>
+              <th>Patent application number</th>
+              <th>Name of the inventors</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Enhanced Data Encryption Algorithm for Secure Mobile Payments in IoT Ecosystems</td>
+              <td>Application No. 202541012918 A</td>
+              <td>Dr. A. Anna Lakshmi; Dr. A. Vijayaraj; Dr. S. Selvakanmani; Dr. T. Mahalingam</td>
+              <td>Published</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Human Tracking Bot Using Sensor Fusion</td>
+              <td>202541013177</td>
+              <td>Dr. A. Vijayaraj; Shaikumar R; Tinku Abenas T; Santhosh V; Gopi Krishnaa L; Saravana Prabhu A. N</td>
+              <td>Published</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Adaptive AI‑Based Recommendation Engine for Personalized E‑Learning Platforms</td>
+              <td>202541023171 A</td>
+              <td>Dr. S. Selvakanmani; Dr. A. Anna Lakshmi; Dr. T. Mahalingam</td>
+              <td>Published</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>AI‑Driven Adaptive Cybersecurity Framework for Real‑Time Threat Detection and Response</td>
+              <td>202541049924 A</td>
+              <td>Mr. Nagarajan; Dr. A. Anna Lakshmi; Dr. S. Selvakanmani; Dr. T. Mahalingam</td>
+              <td>Published</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Blockchain‑Based Decentralized Identity Verification System for Secure Online Transactions</td>
+              <td>202541037681 A</td>
+              <td>Dr. T. Mahalingam; Dr. A. Anna Lakshmi; Dr. S. Selvakanmani; Mr. S. Nagarajan</td>
+              <td>Published</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>INTERACTIVE CLASSROOM MONITORING SYSTEM</td>
+              <td>437610-001</td>
+              <td>Dr. A. Vijayaraj</td>
+              <td>Published</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2023 – 2024 -->
+      <h3 class="subhead">2023 – 2024</h3>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Title of the patent application</th>
+              <th>Patent application number</th>
+              <th>Name of the inventors</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Internet of Things Based Air Quality sensor device</td><td>398899-001</td><td>Dr. A. Vijayaraj</td><td>Published</td></tr>
+            <tr><td>2</td><td>IOT MONITORING SYSTEM FOR DETECTING HARMFUL GASES AND FIRES IN WORK FIELD</td><td>202441009140</td><td>Dr. A. Vijayaraj; Dr. S. Selvakanmani; Dr. A. Annalakshmi; Dr. M. Jayaprakash</td><td>Published</td></tr>
+            <tr><td>3</td><td>IoT CONTROL SMART FARM SYSTEM USING SILICON LED LAMP</td><td>202441010176</td><td>Dr. K. Saravanan; Dr. T. Mahalingam; Dr. R. Rajitha Jasmine; Mr. L. Vinoth Kumar</td><td>Published</td></tr>
+            <tr><td>4</td><td>IOT Based Oxygen Supply System</td><td>202441029740</td><td>Dr. M. Jayaprakash; Dr. T. Vijayaraj; Dr. S. Selvakanmani; Dr. A. Annalakshmi</td><td>Published</td></tr>
+            <tr><td>5</td><td>A System and Method for Remote Controlling and Monitoring of IoT Based Vehicle</td><td>202441029720A</td><td>Dr. T. Mahalingam; Dr. R. Rajitha Jasmine; Dr. K. Saravanan; Dr. J. Sathiamoorthy</td><td>Published</td></tr>
+            <tr><td>6</td><td>HUMAN FOLLOWING ROBOT USING ARDUINO UNO</td><td>202341080347</td><td>Dr. S. Radhika</td><td>Published</td></tr>
+            <tr><td>7</td><td>AN ELECTRONIC WALKING DEVICE FOR PHYSICALLY CHALLENGED PERSONS</td><td>6364399</td><td>Dr. R. Rajitha Jasmine</td><td>Published</td></tr>
+            <tr><td>8</td><td>System and method for categorizing mobile phone price information using machine learning algorithms</td><td>202441044799</td><td>Dr. S. Selvakanmani; Dr. R. Annalakshmi; Dr. M. Jayaprakash; Dr. A. Vijayaraj</td><td>Published</td></tr>
+            <tr><td>9</td><td>A cloud computing system for scalable data storage, processing and method thereof</td><td>202441044796</td><td>Dr. Rajitha Jasmine R; Dr. J. Sathiamoorthy; Dr. T. Mahalingam; Dr. Saravanan</td><td>Published</td></tr>
+            <tr><td>10</td><td>An IoT &amp; AI based Pneumonia Detection Device</td><td>6324846</td><td>Dr. A. Vijayaraj</td><td>Published</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container foot">
+      <div>© 2026 Connect‑X • Department of IT</div>
+      <div class="foot-links">
+        @{/home}Sitemap</a>
+        @{/privacy}Privacy</a>
+        @{/contact}Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Active menu highlight via JS (works without server-side request object) -->
+  <script>
+    (function(){
+      const path = (window.location && window.location.pathname) || "";
+      document.querySelectorAll('.nav a').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        if (href && path && path.indexOf(href) === 0) a.classList.add('active');
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Manage Staff</title>
+  <style>
+    body{font-family:"Segoe UI",Arial,sans-serif;background:#f5f7fa;margin:0;padding:24px;}
+    .layout{display:grid;grid-template-columns: 420px 1fr; gap:24px; align-items:start;}
+    .card{background:#fff;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,.06);padding:16px;}
+    input,select{width:100%;padding:10px;margin:6px 0 12px;border-radius:6px;border:1px solid #cfd6e0;background:#f7f9fc;font-size:14px;box-sizing:border-box;}
+    input:focus{outline:none;border-color:#1976d2;background:#fff;}
+    .btn{padding:10px 14px;border-radius:6px;border:1px solid #1976d2;background:#1976d2;color:#fff;cursor:pointer;}
+    .btn-outline{background:#fff;color:#1976d2;}
+    table{width:100%;border-collapse:collapse;}
+    th,td{padding:8px;border-bottom:1px solid #eee;text-align:left;vertical-align:middle;}
+    .avatar{width:44px;height:44px;border-radius:50%;object-fit:cover;border:1px solid #e2e8f0;}
+    .actions{display:flex;gap:8px;}
+  </style>
+</head>
+<!-- ... head + styles unchanged ... -->
+
+<body>
+  <h1>Manage Staff</h1>
+  <div class="layout">
+    <div class="card">
+      <h3 th:text="${staff.id != null ? 'Edit Staff' : 'Add Staff'}">Add Staff</h3>
+
+      <!-- ✅ IMPORTANT: enctype + method + th:action + th:object + CSRF -->
+      <form th:action="@{/staff/manage/save}"
+            method="post"
+            enctype="multipart/form-data"
+            th:object="${staff}">
+        <!-- CSRF (if enabled) -->
+        <input type="hidden" th:if="${_csrf != null}"
+               th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+        <input type="hidden" th:field="*{id}" />
+
+        <label>Username</label>
+        <input type="text" th:field="*{username}" placeholder="username" required />
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" placeholder="email@example.com" required />
+
+        <label>Full Name</label>
+        <input type="text" th:field="*{fullName}" placeholder="Full name" />
+
+        <label>Designation</label>
+        <input type="text" th:field="*{designation}" placeholder="Assistant Professor" />
+
+        <label>Department</label>
+        <input type="text" th:field="*{department}" placeholder="CSE / ECE / MECH" />
+
+        <label>Phone</label>
+        <input type="text" th:field="*{phone}" placeholder="+91-XXXXXXXXXX" />
+
+        <!-- ✅ NAME MUST MATCH @RequestParam("photo") -->
+        <label>Photo</label>
+        <input type="file" name="photo" accept="image/*" />
+
+        <button type="submit" class="btn">Save Staff</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h3>All Staff</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Photo</th><th>Name</th><th>Designation</th><th>Department</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="s : ${staffList}">
+            <td>
+              <img th:if="${s.photoFilename != null}"
+                   th:src="@{'/uploads/staff/' + ${s.photoFilename}}"
+                   alt="photo" class="avatar" />
+              <div th:if="${s.photoFilename == null}" class="avatar"
+                   style="display:flex;align-items:center;justify-content:center;">👤</div>
+            </td>
+            <td th:text="${s.fullName != null ? s.fullName : s.username}">Name</td>
+            <td th:text="${s.designation}">Designation</td>
+            <td th:text="${s.department}">Department</td>
+            <td class="actions">
+              <a th:href="@{/staff/manage(id=${s.id})}">Edit</a>
+              <form th:action="@{/staff/manage/delete}" method="post" style="display:inline;">
+                <input type="hidden" name="id" th:value="${s.id}" />
+                <input type="hidden" th:if="${_csrf != null}"
+                       th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <button type="submit" class="btn btn-outline">Delete</button>
+                
+        
+                
+              </form>
+              <form th:action="@{/staff/manage/save}" th:object="${staff}" method="post" enctype="multipart/form-data">
+  <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+  <!-- ... your text inputs ... -->
+  <input type="file" name="photo" accept="image/*" />
+  <button type="submit" class="btn">Save Staff</button>
+</form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Connect‑X | Home</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --blue:#0f3560;
+      --blue-2:#1e6ab6;
+      --blue-3:#2f84d8;
+      --shadow:0 12px 30px rgba(16,24,40,.08);
+      --soft:0 6px 16px rgba(16,24,40,.06);
+      --radius:14px;
+      --radius-sm:10px;
+      --footer:#0a2540;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:"Segoe UI", Roboto, Arial, Helvetica, sans-serif;color:var(--ink);background:var(--bg)}
+    a{color:#1e5aa0;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+    .appbar{background:linear-gradient(180deg, #eaf2fb 0%, #e6eef8 100%);border-bottom:1px solid #dbe5f0}
+    .appbar .row{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:12px;color:#0f3560;font-weight:800}
+    .logo{width:46px;height:46px;border-radius:10px;background:#dfeaf7;display:flex;align-items:center;justify-content:center;font-weight:900;color:#0f3560;box-shadow:var(--soft)}
+    .dept-title{display:flex;flex-direction:column;gap:2px}
+    .dept-title .h{font-size:18px;letter-spacing:.2px}
+    .dept-title .s{font-size:12.5px;color:var(--muted)}
+    .userbar{color:#0f3560;font-size:14px}
+    .userbar a{color:#0f3560;font-weight:600}
+
+    .nav{background:var(--blue);border-bottom:3px solid #0b2a4a}
+    .nav .container{display:flex;gap:18px;flex-wrap:wrap}
+    .nav a{color:#e8f0fb;padding:10px 12px;display:inline-block;font-weight:600;border-radius:6px}
+    .nav a:hover{background:rgba(255,255,255,.08)}
+
+    main.container{padding:22px 16px}
+    .row{display:grid;gap:16px}
+    .row-2cols{grid-template-columns:1.2fr .8fr}
+    @media (max-width:950px){.row-2cols{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--soft);padding:18px 20px}
+
+    .welcome{background:linear-gradient(135deg, var(--blue-2), var(--blue-3));color:#fff;position:relative;box-shadow:var(--shadow);overflow:hidden}
+    .welcome:after{content:"";position:absolute;inset:auto -60px -60px auto;width:200px;height:200px;border-radius:50%;background:radial-gradient(closest-side, rgba(255,255,255,.25), transparent 70%);transform:rotate(15deg)}
+    .welcome h2{margin:0 0 8px 0;font-size:22px;font-weight:800}
+    .welcome .lead{margin:0;opacity:.95;font-size:14.7px}
+    .welcome .emoji{font-size:20px;margin-left:6px}
+    .welcome .badges{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .badge{background:rgba(255,255,255,.18);color:#fff;border:1px solid rgba(255,255,255,.35);padding:6px 10px;border-radius:999px;font-size:12px}
+
+    .ann h3{margin:0 0 10px 0;color:#0f3560;font-size:15.5px}
+    .ann ul{margin:0;padding-left:18px}
+    .ann li{margin:8px 0;color:#334155}
+
+    .panels{margin-top:18px}
+    .grid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
+    @media (max-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:860px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+    .panel{border-radius:var(--radius-sm);background:var(--card);box-shadow:var(--soft);padding:16px;border:1px solid #e8eef6}
+    .panel h4{margin:0 0 6px 0;font-size:15.5px;color:#0f3560}
+    .panel p{margin:0 10px 10px 0;color:#4b5563;font-size:13.6px}
+    .panel .action{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+    .arrow{font-weight:900}
+
+    footer{background:var(--footer);color:#c6d7ef;margin-top:28px;padding:18px 0 28px}
+    .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .foot-links{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+    .foot-links a{color:#c6d7ef}
+    .foot-links a:hover{color:#fff}
+
+    /* Chat styles */
+    .chat-fab{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:#2f84d8;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);cursor:pointer;font-size:26px;user-select:none;transition:transform .12s ease, box-shadow .12s ease; z-index:9999}
+    .chat-fab:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(16,24,40,.12)}
+    .chat-window{position:fixed; right:22px; bottom:92px; width:340px; max-height:70vh; background:#fff; border-radius:14px; box-shadow:0 20px 50px rgba(16,24,40,.18); display:none; flex-direction:column; overflow:hidden; z-index:9999}
+    .chat-header{background:linear-gradient(135deg, var(--blue-2), var(--blue-3)); color:#fff; padding:12px 14px; display:flex; align-items:center; justify-content:space-between}
+    .chat-title{font-weight:700}
+    .online{display:flex; align-items:center; gap:8px; font-size:12px; opacity:.95}
+    .dot{width:8px;height:8px;border-radius:50%;background:#43d17b}
+    .chat-close{background:transparent;border:none;color:#fff;cursor:pointer;font-size:18px}
+    .chat-body{padding:12px; overflow:auto; background:#f7f9fc}
+    .msg{max-width:80%; margin:8px 0; padding:8px 10px; border-radius:10px; font-size:14px; line-height:1.35}
+    .bot{background:#e8eef8; color:#0f2f58; border:1px solid #d8e3f3}
+    .user{background:#e6f9ef; color:#0f3a25; border:1px solid #c8efd8; margin-left:auto}
+    .chat-input{display:flex; gap:8px; padding:10px; border-top:1px solid #e9eef6; background:#fff}
+    .chat-input input{flex:1; padding:10px 12px; border:1px solid #dbe5f0; border-radius:8px; font-size:14px}
+    .chat-input button{padding:10px 14px; background:#2f84d8; color:#fff; border:none; border-radius:8px; cursor:pointer}
+    .hint{font-size:12px; color:#6b7280; margin-top:6px}
+    
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="appbar">
+    <div class="container row">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">IT</div>
+        <div class="dept-title">
+          <div class="h">Department of Information Technology</div>
+          <div class="s">Connect‑X • your internal faculty/solution portal</div>
+        </div>
+      </div>
+
+      <div class="userbar">
+        Logged in as <strong th:text="${username} ?: 'Student'">Student</strong> |
+        <a th:href="@{/logout}">Logout</a>
+      </div>
+    </div>
+  </div>
+  
+
+  
+
+  <!-- Blue navigation -->
+  <nav class="nav">
+    <div class="container">
+      <a th:href="@{/home}">Home</a>
+      <a th:href="@{/faculty}">Faculty</a>
+      <a th:href="@{/research}">Research</a>
+      <a th:href="@{/publications}">Publications</a>
+      <a th:href="@{/timetable}">Timetable</a>
+      <a th:href="@{/events}">Events</a>
+      <a th:href="@{/contact}">Contact</a>
+      <a th:href="@{/about-it}">About Department</a>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="container">
+    <!-- Welcome + Announcements -->
+    <section class="row row-2cols">
+      <!-- Welcome -->
+      <div class="card welcome">
+        <h2>
+          Welcome, <span th:text="${username} ?: 'User'">User</span>
+          <span class="emoji">👋</span>
+        </h2>
+        <p class="lead">
+          Explore faculty profiles, research updates, course materials, announcements, and more.
+          Use the quick links and cards below to jump into common areas.
+        </p>
+        <div class="badges">
+          <span class="badge">Faculty</span>
+          <span class="badge">Courses</span>
+          <span class="badge">Research</span>
+          <span class="badge">Resources</span>
+        </div>
+      </div>
+
+      <!-- Announcements -->
+      <aside class="card ann">
+        <h3>Announcements</h3>
+        <ul>
+          <li>Department meeting on Friday, 4:00 PM (Seminar Hall)</li>
+          <li>Project review cycle – upload abstracts by next Monday</li>
+          <li>New publication submission window opens next week</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- Panels -->
+    <section class="panels">
+      <div class="grid">
+
+        <div class="panel">
+          <h4>Faculty Directory</h4>
+          <p>Browse profiles, areas of expertise, and contact information.</p>
+          <a class="action" th:href="@{/faculty}">View Faculty <span class="arrow">→</span></a>
+        </div>
+
+        <div class="panel">
+          <h4>Course Materials</h4>
+          <p>Access lecture notes, labs, schedules, and outlines.</p>
+          <a class="action" th:href="@{/courses}">Go to Courses <span class="arrow">→</span></a>
+        </div>
+
+        <div class="panel">
+          <h4>Research &amp; Publications</h4>
+          <p>Discover labs, projects, publications, and collaborators.</p>
+          <a class="action" th:href="@{/research}">Explore Research <span class="arrow">→</span></a>
+        </div>
+
+        <div class="panel">
+          <h4>Quick Links</h4>
+          <a th:href="@{/faculty}">Faculty Handbook</a><br/>
+          <a th:href="@{/funding}">Research Funding</a><br/>
+          <a th:href="@{/timetable}">Lab Schedules</a><br/>
+          <a th:href="@{/forms}">Download Forms</a><br/>
+          <a th:href="@{/student}">Student Portal</a>
+        </div>
+
+        <div class="panel">
+          <h4>Time Table</h4>
+          <p>Updated academic and exam schedules for the semester.</p>
+          <a class="action" th:href="@{/timetable}">View Timetable <span class="arrow">→</span></a>
+        </div>
+
+        <div class="panel">
+          <h4>Events &amp; News</h4>
+          <p>Seminars, workshops, invited talks, and department updates.</p>
+          <a class="action" th:href="@{/events}">See Events <span class="arrow">→</span></a>
+        </div>
+
+        <div class="panel">
+          <h4>Resources</h4>
+          <p>Useful forms, policies, templates, and documentation.</p>
+          <a class="action" th:href="@{/resources}">Open Resources <span class="arrow">→</span></a>
+        </div>
+
+        <div class="panel">
+          <h4>Contacts</h4>
+          <p style="line-height:1.6">
+            <strong>Office:</strong> Room 207, IT Block<br/>
+            <strong>Email:</strong> infoit@example.edu<br/>
+            <strong>Phone:</strong> +91‑44‑0000 0000
+          </p>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container foot">
+      <div>© 2026 Connect‑X • Department of IT</div>
+      <div class="foot-links">
+        <a th:href="@{/home}">Sitemap</a>
+        <a th:href="@{/privacy}">Privacy</a>
+        <a th:href="@{/contact}">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Chat Button -->
+  <button class="chat-fab" id="cxChatFab" aria-label="Open chat" title="Chat">💬</button>
+
+  <!-- Chat Window -->
+  <section class="chat-window" id="cxChatWin" role="dialog" aria-modal="true" aria-labelledby="cxChatTitle">
+    <header class="chat-header">
+      <div class="chat-title" id="cxChatTitle">Connect‑X Assistant</div>
+      <div class="online"><span class="dot"></span> Online</div>
+      <button class="chat-close" id="cxChatClose" aria-label="Close chat">×</button>
+    </header>
+    <div class="chat-body" id="cxChatBody">
+      <div class="msg bot">
+        Hi <strong th:text="${username} ?: 'there'">there</strong>! 👋 I can help with department info—try:
+        <br><code>about</code>, <code>courses</code>, <code>faculty</code>, <code>labs</code>, <code>accreditation</code>, <code>timetable</code>, <code>events</code>, <code>contact</code>, <code>research</code>, <code>publications</code>.
+      </div>
+    </div>
+    <div class="chat-input">
+      <input id="cxChatInput" type="text" placeholder="Ask me about the department…" />
+      <button id="cxChatSend">Send</button>
+    </div>
+    <div class="hint" style="padding: 0 12px 10px;">Tip: try “courses”, “faculty count”, “IT labs”, or “how to contact”.</div>
+  </section>
+
+  <script>
+    (function(){
+      // ----- Department mini knowledge base (edit these to your real details) -----
+      const KB = {
+        deptName: "Department of Information Technology",
+        about: "The IT department focuses on modern computing foundations and industry-aligned skills across Software Engineering, AI/ML, Data Science, Cloud and Cyber Security. We emphasize hands-on learning, projects, and research exposure.",
+        courses: [
+          "B.Tech – Information Technology",
+          "Honours: Full-Stack, AI/ML, Data Science, Cyber Security",
+          "Minors: IoT, Robotics & Automation, Embedded Systems, Business Analytics"
+        ],
+        labs: [
+          "Programming & Data Structures Lab",
+          "DBMS & Full-Stack Lab",
+          "AI/ML & Data Science Lab",
+          "Cloud & DevOps Lab",
+          "Cyber Security Lab"
+        ],
+        accreditation: "NBA accredited cycle; aligned with NAAC/University requirements.",
+        facultySummary: { total: 24, breakdown: { professors: 4, associateProf: 6, assistantProf: 14 } },
+        contact: { office: "Room 207, IT Block", email: "infoit@example.edu", phone: "+91‑44‑0000 0000" },
+        links: {
+          home:"@{/home}", faculty:"@{/faculty}", courses:"@{/courses}", research:"@{/research}",
+          publications:"@{/publications}", timetable:"@{/timetable}", events:"@{/events}",
+          resources:"@{/resources}", contact:"@{/contact}"
+        }
+      };
+
+      // ----- UI helpers -----
+      const $ = (id)=>document.getElementById(id);
+      const fab=$("cxChatFab"), win=$("cxChatWin"), close=$("cxChatClose"),
+            body=$("cxChatBody"), input=$("cxChatInput"), send=$("cxChatSend");
+
+      function openChat(){ win.style.display='flex'; setTimeout(()=>input.focus(), 30); }
+      function closeChat(){ win.style.display='none'; }
+      function addMsg(html, who='bot'){ const div=document.createElement('div'); div.className='msg '+who; div.innerHTML=html; body.appendChild(div); body.scrollTop=body.scrollHeight; }
+      const link=(href,text)=>`${href}${text}</a>`;
+      const list=(items)=>`<ul style="margin:6px 0 0 18px">${items.map(i=>`<li>${i}</li>`).join('')}</ul>`;
+
+      // ----- Intent routing -----
+      function answer(q){
+        const t=q.trim().toLowerCase();
+        if(!t) return;
+
+        if(["hi","hello","hey"].includes(t)){
+          addMsg(`Hello! Ask me about <code>courses</code>, <code>faculty</code>, <code>labs</code>, <code>timetable</code>, <code>events</code>, <code>contact</code>, <code>research</code>.`);
+          return;
+        }
+        if(t.includes("about") || t.includes("department")){
+          addMsg(`<strong>${KB.deptName}</strong> — ${KB.about}`); return;
+        }
+        if(t.includes("course") || t.includes("program")){
+          addMsg(`Programs:${list(KB.courses)}<div style="margin-top:6px">${link(KB.links.courses,"Go to Courses →")}</div>`); return;
+        }
+        if(t.includes("faculty")){
+          const f=KB.facultySummary;
+          addMsg(`Faculty strength: <strong>${f.total}</strong> (Professors: ${f.breakdown.professors}, Associate Professors: ${f.breakdown.associateProf}, Assistant Professors: ${f.breakdown.assistantProf}). <div style="margin-top:6px">${link(KB.links.faculty,"View Faculty →")}</div>`); return;
+        }
+        if(t.includes("lab")){
+          addMsg(`Major labs:${list(KB.labs)}`); return;
+        }
+        if(t.includes("nba") || t.includes("accredit")){
+          addMsg(KB.accreditation); return;
+        }
+        if(t.includes("time") || t.includes("timetable") || t.includes("schedule")){
+          addMsg(`See the latest schedule: ${link(KB.links.timetable,"View Timetable →")}`); return;
+        }
+        if(t.includes("event") || t.includes("news") || t.includes("workshop") || t.includes("seminar")){
+          addMsg(`Upcoming events: ${link(KB.links.events,"See Events →")}`); return;
+        }
+        if(t.includes("research") || t.includes("publication")){
+          addMsg(`Explore: ${link(KB.links.research,"Research →")} &nbsp;|&nbsp; ${link(KB.links.publications,"Publications →")}`); return;
+        }
+        if(t.includes("contact") || t.includes("phone") || t.includes("email") || t.includes("office")){
+          const c=KB.contact;
+          addMsg(`<div><strong>Office:</strong> ${c.office}<br><strong>Email:</strong> mailto:${c.email}${c.email}</a><br><strong>Phone:</strong> ${c.phone}</div><div style="margin-top:6px">${link(KB.links.contact,"Contact Page →")}</div>`); return;
+        }
+        addMsg(`I didn't get that. Try: <code>courses</code>, <code>faculty</code>, <code>labs</code>, <code>timetable</code>, <code>events</code>, <code>contact</code>, <code>research</code>, <code>about</code>.`);
+      }
+
+      function sendMsg(){
+        const text=input.value; if(!text) return;
+        addMsg(text, 'user'); input.value=''; setTimeout(()=>answer(text), 250);
+      }
+
+      fab.addEventListener('click', openChat);
+      close.addEventListener('click', closeChat);
+      send.addEventListener('click', sendMsg);
+      input.addEventListener('keydown', (e)=>{ if(e.key==='Enter') sendMsg(); });
+
+      // Open once on first visit
+      try{
+        const seen=localStorage.getItem('cx_chat_seen_v2'); if(!seen){ setTimeout(openChat,900); localStorage.setItem('cx_chat_seen_v2','yes'); }
+      }catch(_){}
+    })();
+  </script>
+</body>
+</html>

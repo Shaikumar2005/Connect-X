@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwwthymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About the Department – Information Technology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ======================= Styles ======================= -->
+  <style>
+    :root{
+      --bg:#ffffff;
+      --text:#1e293b;
+      --muted:#64748b;
+      --border:#e2e8f0;
+      --card:#ffffff;
+      --chip:#f1f5f9;
+      --accent:#2563eb;
+      --accent2:#3b82f6;
+      --line:#e2e8f0;
+      --shadow: 0 4px 20px rgba(0,0,0,.05);
+      --radius:14px;
+    }
+
+    body{
+      margin:0; padding:0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      line-height:1.75;
+    }
+    a{ color:var(--accent2); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:32px 22px 60px;
+    }
+
+    /* Hero Section */
+    .hero{
+      background: linear-gradient(135deg, #e8f0ff, #ffffff);
+      padding:32px 22px;
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+    .hero h1{ font-size:34px; margin:0 0 6px; }
+    .hero p{ color:var(--muted); max-width:830px; }
+
+    /* Section Chips */
+    .quicknav{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin:14px 0 0;
+    }
+    .chip{
+      padding:8px 14px; background:var(--chip);
+      border-radius:999px; border:1px solid var(--border);
+      font-size:14px; color:var(--accent);
+      transition: .2s;
+    }
+    .chip:hover{
+      background:#e2efff;
+      cursor:pointer;
+      text-decoration:none;
+    }
+
+    /* Section Titles */
+    h2{
+      margin:36px 0 8px;
+      font-size:22px;
+      font-weight:700;
+      color:#1e293b;
+      padding-bottom:4px;
+      border-bottom:2px solid var(--border);
+    }
+    h3{ margin: 6px 0 4px; font-size:18px; }
+
+    /* Card Box */
+    .box{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:18px 22px;
+      box-shadow: var(--shadow);
+      margin-top:14px;
+    }
+
+    ul{ padding-left: 20px; margin:8px 0; }
+    li{ margin:5px 0; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap:14px;
+    }
+    .stat{
+      text-align:center;
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:16px;
+    }
+    .stat strong{
+      display:block; font-size:24px; color:var(--accent);
+      margin-bottom:4px;
+    }
+
+    .muted{ color:var(--muted); }
+  </style>
+</head>
+
+
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>About the Department – Information Technology</h1>
+    <p>
+      The Department of Information Technology is committed to excellence in teaching,
+      research, and industry collaboration—empowering students to build, innovate, and lead.
+    </p>
+<div class="quicknav">
+
+  <a th:href="@{/#courses}">📚 Courses</a>
+  <a th:href="@{/#honours}">🎓 Honours</a>
+  <a th:href="@{/#minor}">🎯 Minor</a>
+  <a th:href="@{/#phd}">🧪 Doctoral</a>
+  <a th:href="@{/#salient}">✨ Features</a>
+  <a th:href="@{/#faculty}">👩‍🏫 Faculty</a>
+  <a th:href="@{/#curriculum}">🧩 Curriculum</a>
+  <a th:href="@{/#placement}">💼 Placement</a>
+  <a th:href="@{/#rnd}">🧠 R&D</a>
+  <a th:href="@{/#societies}">🤝 Societies</a>
+  <a th:href="@{/#coe}">🏛️ CoEs</a>
+  <a th:href="@{/#highlights}">🌟 Highlights</a>
+
+</div>
+  </section>
+
+  <!-- COURSES -->
+  <h2 id="courses">Courses Offered</h2>
+  <div class="box">
+    <h3>B.Tech – Information Technology</h3>
+    <p>
+      Knowledge Partner and powered by <strong>Virtusa</strong> and <strong>Hexaware</strong>.
+    </p>
+  </div>
+
+  <!-- HONOURS -->
+  <h2 id="honours">Honours Degree Offered</h2>
+  <div class="box">
+    <p><strong>B.Tech (Honours) Specializations:</strong></p>
+    <ul>
+      <li>Full Stack Engineering</li>
+      <li>AI & Machine Learning</li>
+      <li>Data Science</li>
+      <li>Media Processing</li>
+      <li>Cyber Security</li>
+      <li>Fintech & Web 3.0</li>
+      <li>Quantum Computing</li>
+    </ul>
+  </div>
+
+  <!-- MINOR -->
+  <h2 id="minor">Minor Degree Offered</h2>
+  <div class="box">
+    <p><strong>B.Tech IT with Minor in:</strong></p>
+    <ul>
+      <li>Internet of Things</li>
+      <li>Robotics and Automation</li>
+      <li>Electric Vehicle Technology</li>
+      <li>Embedded Systems</li>
+      <li>Business Analytics</li>
+      <li>Entrepreneurship & Innovation</li>
+    </ul>
+  </div>
+
+  <!-- PHD -->
+  <h2 id="phd">Doctoral Programme</h2>
+  <div class="box">
+    <p><strong>Ph.D – Information and Communication Engineering</strong></p>
+  </div>
+
+  <!-- SALIENT -->
+  <h2 id="salient">Salient Features</h2>
+  <div class="box">
+    <p>
+      Department established in 1999 with an intake of 30, now grown to 120.
+    </p>
+    <p>
+      Accredited by NBA (2022–2025), focusing on domain training, research, and holistic development.
+    </p>
+    <p>
+      Equipped with modern labs; received <strong>AICTE–CII Award 2018</strong>.
+    </p>
+  </div>
+
+  <!-- FACULTY -->
+  <h2 id="faculty">Faculty Strength</h2>
+  <div class="box">
+    <p>
+      24 Faculty members with 50% holding Ph.D. Active in consultancy, research, and advanced training.
+    </p>
+  </div>
+
+  <!-- CURRICULUM -->
+  <h2 id="curriculum">Curriculum Enrichment</h2>
+  <div class="box">
+    <p>
+      Virtusa contributes to <strong>40.38%</strong> curriculum design.
+      Practicum-integrated courses, expert-led instruction, and RMK NextGen AI learning are key highlights.
+    </p>
+  </div>
+
+  <!-- PLACEMENT -->
+  <h2 id="placement">Placement</h2>
+  <div class="box">
+    <div class="grid">
+      <div class="stat"><strong>97.91%</strong>2024 Batch</div>
+      <div class="stat"><strong>98.08%</strong>2023 Batch</div>
+      <div class="stat"><strong>100%</strong>2022 Batch</div>
+      <div class="stat"><strong>94%</strong>2021 Batch</div>
+      <div class="stat"><strong>98%</strong>2020 Batch</div>
+      <div class="stat"><strong>94%</strong>2019 Batch</div>
+    </div>
+  </div>
+
+  <!-- R&D -->
+  <h2 id="rnd">Research & Development</h2>
+  <div class="box">
+    <p>
+      Faculty and students publish widely in national and international venues.
+      Active collaborations with universities and industries.
+    </p>
+  </div>
+
+  <!-- SOCIETIES -->
+  <h2 id="societies">Professional Societies & Student Activities</h2>
+  <div class="box">
+    <p>
+      Students participate in IEI, ISTE, IETE, IEEE, and the ITSA.
+      National symposium <strong>CYBERNAUTIX</strong> drives innovation.
+    </p>
+  </div>
+
+  <!-- COE -->
+  <h2 id="coe">Centres of Excellence</h2>
+  <div class="box">
+    <p>
+      Four CoEs: Virtusa Full Stack, Front End, Cloud Computing, and Data Science.
+    </p>
+  </div>
+
+  <!-- HIGHLIGHTS -->
+  <h2 id="highlights">Key Highlights</h2>
+  <div class="box">
+    <ul>
+      <li>100% graduation rate (2022–2024)</li>
+      <li>97.7% average placement</li>
+      <li>Industry-designed autonomous curriculum</li>
+      <li>AICTE Idea Lab – Product Development from Sem I</li>
+      <li>13 active student clubs</li>
+      <li>260+ research papers & 11 patents</li>
+      <li>Industry internships integrated</li>
+      <li>Global certifications (Coursera, edX, NPTEL)</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

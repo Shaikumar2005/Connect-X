@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Faculty – Publications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- ====== Styles ====== -->
+  <style>
+    :root {
+      --border:#e5e7eb; --muted:#6b7280; --ok:#1b5e20; --link:#0b5ed7;
+      --chip:#eef3f8; --warn:#0d47a1; --card:#ffffff; --bg:#f8fafc;
+    }
+    html, body { margin:0; padding:0; background:#fff; color:#0f172a; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .container { max-width: 1100px; margin: 28px auto 56px; padding: 0 16px; }
+    .toolbar { margin-bottom: 12px; display:flex; gap:10px; flex-wrap:wrap; }
+    .toolbar a { color: var(--link); text-decoration: none; }
+    .toolbar a:hover { text-decoration: underline; }
+    h1 { margin: 6px 0 4px; }
+    .muted { color: var(--muted); }
+    .muted-sm { color: var(--muted); font-size: 12px; }
+
+    .card {
+      background: var(--card); border:1px solid var(--border); border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04); margin: 14px 0 22px; overflow: hidden;
+    }
+    .card .hd { padding: 12px 14px; background: var(--chip); font-weight: 600; }
+
+    /* Faculty */
+    .faculty-card { border-top:1px solid var(--border); padding:12px 14px; }
+    .faculty-head { display:flex; gap:16px; align-items:flex-start; }
+    .faculty-head img {
+      width:70px; height:70px; object-fit:cover; border-radius:50%;
+      border:1px solid var(--border); background:#fff;
+    }
+    .faculty-name { font-weight:800; font-size:18px; }
+    .faculty-meta { margin-top:4px; display:flex; gap:8px; flex-wrap:wrap; }
+    .chip { display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; background:var(--chip); }
+    .chip-link { background:#f1f5ff; color:#0b5ed7; border:1px solid #dbeafe; text-decoration:none; }
+
+    .pub-list { margin:10px 0 0 86px; }
+    .pub-item { margin:6px 0; }
+    .pub-item a { color: var(--link); text-decoration: none; }
+    .pub-item a:hover { text-decoration: underline; }
+
+    @media (max-width: 780px){
+      .faculty-head { flex-direction: column; align-items:flex-start; gap:10px; }
+      .pub-list { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/publications}">&larr; Publications</a>
+  </div>
+
+  <h1>Faculty – Publications</h1>
+  <p class="muted">Department‑wise faculty research highlights and publication records (auto‑synced from IEEE Xplore by Author ID).</p>
+
+  <!-- =============== Faculty List =============== -->
+  <div class="card">
+    <div class="hd">Faculty Publications</div>
+    <div id="faculty-list">
+      <!-- Rendered by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- =============== JS: Faculty Data + IEEE Fetch/Render =============== -->
+<script>
+/**
+ * HOW TO USE
+ * 1) Add your faculty entries below: name, authorId (IEEE Xplore), photo file (under /images/research/).
+ * 2) The code fetches profile and latest publications, showing up to MAX_ITEMS_PER_FACULTY per person.
+ * 3) Set MAX_ITEMS_PER_FACULTY to a number, or to "ALL" to show all on first page (rowsPerPage=100).
+ */
+
+const facultyList = [
+  // ==== EXAMPLES — REPLACE WITH REAL FACULTY ====
+  {
+    name: "Prof. A. Researcher",
+    authorId: "37279677800",           // sample author id
+    photo: "faculty-a.jpg",
+    role: "Professor, ECE",
+    homepage: ""                       // optional external page
+  },
+  {
+    name: "Prof. B. Scientist",
+    authorId: "00000000000",           // put real author id
+    photo: "faculty-b.jpg",
+    role: "Associate Professor, CSE",
+    homepage: ""
+  },
+  {
+    name: "Prof. C. Innovator",
+    authorId: "11111111111",           // put real author id
+    photo: "faculty-c.jpg",
+    role: "Assistant Professor, IT",
+    homepage: ""
+  }
+  // ==============================================
+];
+
+// CONFIG: number of items per faculty. e.g., 8, 10, or "ALL"
+const MAX_ITEMS_PER_FACULTY = 8;
+
+// If you face CORS and add the server proxy (see note at bottom), set these to your proxy routes.
+const AUTHOR_ENDPOINT   = (aid) => `https://ieeexplore.ieee.org/rest/author/${aid}`;
+const SEARCH_ENDPOINT   = `https://ieeexplore.ieee.org/rest/search`;
+
+// Tiny helper for DOM creation
+function el(tag, props={}, children=[]) {
+  const node = document.createElement(tag);
+  Object.entries(props).forEach(([k,v]) => {
+    if (k === 'class') node.className = v;
+    else if (k === 'style' && typeof v === 'object') Object.assign(node.style, v);
+    else if (k in node) node[k] = v;
+    else node.setAttribute(k, v);
+  });
+  (Array.isArray(children) ? children : [children]).filter(Boolean).forEach(c =>
+    node.appendChild(typeof c === 'string' ? document.createTextNode(c) : c)
+  );
+  return node;
+}
+
+// Fetch author profile (array with one object usually)
+async function fetchAuthorProfile(authorId) {
+  const res = await fetch(AUTHOR_ENDPOINT(authorId), { credentials: 'omit' });
+  if (!res.ok) throw new Error(`Author fetch failed: ${res.status}`);
+  return res.json();
+}
+
+// Fetch publications for an author (sorted newest)
+async function fetchAuthorPublications(authorId, rowsPerPage = 100, pageNumber = 1) {
+  const payload = {
+    queryText: "",
+    highlight: true,
+    returnType: "SEARCH",
+    rowsPerPage,
+    pageNumber,
+    sortType: "newest",
+    searchWithin: [`"Author Ids": ${authorId}`]
+  };
+  const res = await fetch(SEARCH_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json;charset=UTF-8' },
+    body: JSON.stringify(payload),
+    credentials: 'omit'
+  });
+  if (!res.ok) throw new Error(`Search fetch failed: ${res.status}`);
+  return res.json();
+}
+
+function buildFacultyCardShell(f) {
+  const card = el('div', { class:'faculty-card', id: `faculty-${f.authorId}` });
+
+  const head = el('div', { class:'faculty-head' });
+  const img = el('img', {
+    alt: (f.name || 'faculty') + ' photo',
+    src: f.photo ? ('/images/research/' + f.photo) : '/images/no-photo.png'
+  });
+  img.onerror = () => { img.src = '/images/no-photo.png'; };
+
+  const headRight = el('div', {}, [
+    el('div', { class:'faculty-name' }, f.name || 'Faculty'),
+    el('div', { class:'muted-sm' }, f.role || ''),
+    el('div', { class:'faculty-meta' }, [
+      el('span', { class:'chip', id:`chip-pub-${f.authorId}` }, 'Loading…'),
+      el('a', {
+        class:'chip chip-link',
+        href:`https://ieeexplore.ieee.org/author/${f.authorId}`,
+        target:'_blank', rel:'noopener'
+      }, 'IEEE Profile ↗'),
+      f.homepage ? el('a', { class:'chip chip-link', href:f.homepage, target:'_blank', rel:'noopener' }, 'Homepage ↗') : null
+    ])
+  ]);
+
+  head.appendChild(img);
+  head.appendChild(headRight);
+
+  const list = el('ul', { class:'pub-list', id:`pubs-${f.authorId}` }, [
+    el('li', { class:'muted' }, 'Fetching latest publications…')
+  ]);
+
+  card.appendChild(head);
+  card.appendChild(list);
+  return card;
+}
+
+function renderPublications(authorId, records) {
+  const list = document.getElementById(`pubs-${authorId}`);
+  const chip = document.getElementById(`chip-pub-${authorId}`);
+
+  if (!list) return;
+
+  list.innerHTML = '';
+
+  if (!records || records.length === 0) {
+    list.appendChild(el('li', { class:'muted' }, 'No publications found on IEEE Xplore.'));
+    if (chip) chip.textContent = '0 Published';
+    return;
+  }
+
+  const slice = (MAX_ITEMS_PER_FACULTY === 'ALL') ? records : records.slice(0, MAX_ITEMS_PER_FACULTY);
+
+  slice.forEach(rec => {
+    const title = rec.articleTitle || rec.htmlTitle || 'Untitled';
+    const venue = rec.publicationTitle || rec.publicationTitleHtml || '';
+    const year  = rec.publicationYear || (rec.publicationDate ? (String(rec.publicationDate).match(/\b\d{4}\b/) || [])[0] : '');
+    const artNo = rec.articleNumber || (rec.pdfUrl && (rec.pdfUrl.match(/\/(\d+)\.pdf$/)||[])[1]) || '';
+    const link  = rec.htmlLink || (artNo ? `https://ieeexplore.ieee.org/document/${artNo}` : '');
+
+    const li = el('li', { class:'pub-item' }, [
+      link ? el('a', { href: link, target:'_blank', rel:'noopener' }, title)
+           : el('span', {}, title),
+      (venue || year) ? el('div', { class:'muted-sm' }, [venue, year ? ` • ${year}` : '']) : null
+    ]);
+    list.appendChild(li);
+  });
+
+  if (chip) {
+    const total = records.length;
+    const shown = (MAX_ITEMS_PER_FACULTY === 'ALL') ? total : Math.min(total, MAX_ITEMS_PER_FACULTY);
+    chip.textContent = `${shown} of ${total} Published`;
+  }
+}
+
+async function renderFaculty(f) {
+  const container = document.getElementById('faculty-list');
+  const card = buildFacultyCardShell(f);
+  container.appendChild(card);
+
+  // Optional: update name from profile
+  try {
+    const profArr = await fetchAuthorProfile(f.authorId);
+    const prof = Array.isArray(profArr) ? profArr[0] : profArr;
+    if (prof?.preferredName) {
+      const nameEl = card.querySelector('.faculty-name');
+      if (nameEl) nameEl.textContent = prof.preferredName;
+    }
+  } catch (e) {
+    // Non-fatal
+    console.warn(`Author profile failed for ${f.authorId}`, e);
+  }
+
+  // Publications
+  try {
+    const data = await fetchAuthorPublications(f.authorId, 100, 1);
+    const records = Array.isArray(data?.records) ? data.records : [];
+    renderPublications(f.authorId, records);
+  } catch (e) {
+    console.error(`Publications fetch failed for ${f.authorId}`, e);
+    const list = document.getElementById(`pubs-${f.authorId}`);
+    const chip = document.getElementById(`chip-pub-${f.authorId}`);
+    if (list) {
+      list.innerHTML = '';
+      list.appendChild(el('li', { class:'muted' }, 'Could not load publications automatically. (If this is a CORS block, use the proxy noted below.)'));
+    }
+    if (chip) chip.textContent = '—';
+  }
+}
+
+function initFaculty() {
+  const wrap = document.getElementById('faculty-list');
+  wrap.innerHTML = ''; // clear
+  if (!facultyList || facultyList.length === 0) {
+    wrap.appendChild(el('div', { class:'muted' }, 'No faculty added yet.'));
+    return;
+  }
+  facultyList.forEach(renderFaculty);
+}
+
+initFaculty();
+
+</script>
+</body>
+</html>

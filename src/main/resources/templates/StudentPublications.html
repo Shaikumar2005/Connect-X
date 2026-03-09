@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Students – Publications</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <!-- ====== Styles ====== -->
+  <style>
+    :root {
+      --border:#e5e7eb; --muted:#6b7280; --ok:#1b5e20; --link:#0b5ed7;
+      --chip:#eef3f8; --warn:#0d47a1; --card:#ffffff; --bg:#f8fafc;
+    }
+    html, body { margin:0; padding:0; background:#fff; color:#0f172a; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    .container { max-width: 1000px; margin: 28px auto 56px; padding: 0 16px; }
+    .toolbar { margin-bottom: 12px; display:flex; gap:10px; flex-wrap:wrap; }
+    .toolbar a { color: var(--link); text-decoration: none; }
+    .toolbar a:hover { text-decoration: underline; }
+    h1 { margin: 6px 0 4px; }
+    .muted { color: var(--muted); }
+
+    .card {
+      background: var(--card); border:1px solid var(--border); border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.04); margin: 14px 0 22px; overflow: hidden;
+    }
+    .card .hd { padding: 12px 14px; background: var(--chip); font-weight: 600; }
+
+    /* Top student */
+    .top-student .top-wrap { display:flex; gap:16px; padding:14px 16px; align-items:flex-start; }
+    .top-student img {
+      width:96px; height:96px; object-fit:cover; border-radius:50%;
+      border:1px solid var(--border); background:#fff;
+    }
+    .top-name { font-weight:800; font-size:20px; }
+    .top-meta { margin: 6px 0 8px; display:flex; flex-wrap:wrap; gap:8px; }
+    .chip { display:inline-block; padding:2px 10px; border-radius:999px; font-size:12px; background:var(--chip); }
+    .chip-warn { background:#e3f2fd; color:var(--warn); border:1px solid #bbdefb; }
+    .chip-link { background:#f1f5ff; color:#0b5ed7; border:1px solid #dbeafe; text-decoration:none; }
+    .top-desc { margin: 4px 0 0 0; line-height:1.5; }
+
+    /* Other students */
+    .student-card { border-top:1px solid var(--border); padding:12px 14px; }
+    .student-head { display:flex; gap:12px; align-items:center; }
+    .student-head img {
+      width:48px; height:48px; object-fit:cover; border-radius:50%;
+      border:1px solid var(--border); background:#fff;
+    }
+    .student-name { font-weight:700; }
+    .muted-sm { color: var(--muted); font-size: 12px; }
+    .pub-list { margin:8px 0 0 60px; }
+    .pub-item { margin:4px 0; }
+    .pub-item a { color: var(--link); text-decoration: none; }
+    .pub-item a:hover { text-decoration: underline; }
+
+    @media (max-width: 720px){
+      .top-student .top-wrap { flex-direction: column; align-items: flex-start; }
+      .pub-list { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <a th:href="@{/publications}">&larr; Publications</a>
+    <a th:href="@{/home}">Home</a>
+  </div>
+
+  <h1>Students – Publications</h1>
+  <p class="muted">Batch-wise research highlights and publication records.</p>
+
+  <!-- =============== Top Student (You) =============== -->
+  <div class="card top-student">
+    <div class="hd">Top Student in College (by publication record)</div>
+    <div class="top-wrap">
+
+      <!-- Your Photo -->
+      <img th:src="@{/images/research/Shai Kumar R.jpg}" alt="Shaikumar R photo"
+           onerror="this.onerror=null;this.src='/images/no-photo.png';"/>
+
+      <div class="top-details">
+        <div class="top-name">Shai Kumar R</div>
+        
+        <div class="top-meta">
+          <span class="chip">9 Published</span>
+          <span class="chip chip-warn">2 To be published</span>
+          <a class="chip chip-link" href="https://ieeexplore.ieee.org/author/855606853958716"
+             target="_blank" rel="noopener">IEEE Profile ↗</a>
+        </div>
+        <p class="top-desc">
+          Passionate about applied AI, embedded systems, and assistive technologies. Led multiple
+          projects in computer vision and IoT—focusing on <em>sensor fusion</em>, <em>real‑time analytics</em>,
+          and <em>human‑centric design</em>. Current work spans PWA architectures, edge inference, and
+          practical AI deployments that create impact for campus and community users.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =============== Other Students =============== -->
+  <div class="card">
+    <div class="hd">Other Students</div>
+    <div id="students-list"></div>
+  </div>
+
+</div>
+
+<!-- =============== JS: Other Students Data + Render =============== -->
+<script>
+  /**
+   * Edit this array to add/update other students and their publications.
+   * Place images under: /images/research/
+   */
+  const otherStudents = [
+    {
+      name: "Vigneshwaran N",
+      photo: "student-a.jpg",
+      publications: [
+        { title: "Efficient Vision Transformer for Edge Devices", venue: "ICCC 2025", link: "" },
+        { title: "TinyML Sensing for Smart Campus", venue: "Sensors Journal", link: "" }
+      ]
+    },
+    {
+      name: "Student B",
+      photo: "student-b.jpg",
+      publications: [
+        { title: "Federated Learning for Healthcare", venue: "IJAI 2025", link: "" }
+      ]
+    },
+    {
+      name: "Student C",
+      photo: "student-c.jpg",
+      publications: [
+        { title: "PWA-based Real-time Navigation", venue: "Tech Symposium 2025", link: "" }
+      ]
+    }
+  ];
+
+  const listEl = document.getElementById('students-list');
+
+  function renderStudents(list) {
+    listEl.innerHTML = '';
+    if (!list || list.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'muted';
+      empty.textContent = 'No other students listed yet.';
+      listEl.appendChild(empty);
+      return;
+    }
+
+    list.forEach((s, idx) => {
+      const card = document.createElement('div');
+      card.className = 'student-card';
+
+      const head = document.createElement('div');
+      head.className = 'student-head';
+
+      const img = document.createElement('img');
+      img.alt = (s.name || 'student') + ' photo';
+      img.src = s.photo ? ('/images/research/' + s.photo) : '/images/no-photo.png';
+      img.onerror = () => { img.src = '/images/no-photo.png'; };
+
+      const nameBox = document.createElement('div');
+      const nm = document.createElement('div');
+      nm.className = 'student-name';
+      nm.textContent = s.name || `Student ${idx+1}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'muted-sm';
+      meta.textContent = `${(s.publications?.length || 0)} publication(s)`;
+
+      nameBox.appendChild(nm);
+      nameBox.appendChild(meta);
+
+      head.appendChild(img);
+      head.appendChild(nameBox);
+      card.appendChild(head);
+
+      const pubs = s.publications || [];
+      if (pubs.length > 0) {
+        const ul = document.createElement('ul');
+        ul.className = 'pub-list';
+        pubs.forEach(p => {
+          const li = document.createElement('li');
+          li.className = 'pub-item';
+
+          if (p.link && p.link.trim().length > 0) {
+            const a = document.createElement('a');
+            a.href = p.link;
+            a.target = "_blank";
+            a.rel = "noopener";
+            a.textContent = p.title || 'Untitled';
+            li.appendChild(a);
+          } else {
+            const span = document.createElement('span');
+            span.textContent = p.title || 'Untitled';
+            li.appendChild(span);
+          }
+
+          if (p.venue) {
+            const v = document.createElement('div');
+            v.className = 'muted-sm';
+            v.textContent = p.venue;
+            li.appendChild(v);
+          }
+
+          ul.appendChild(li);
+        });
+        card.appendChild(ul);
+      }
+
+      listEl.appendChild(card);
+    });
+  }
+
+  // Initial render
+  renderStudents(otherStudents);
+</script>
+</body>
+</html>

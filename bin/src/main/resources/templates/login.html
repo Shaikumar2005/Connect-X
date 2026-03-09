@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connect‑X | Login</title>
+  <style>
+    :root{ --bg:#f4f7fb; --card:#fff; --ink:#1f2937; --muted:#6b7280; --blue:#1e6ab6; --soft:0 6px 16px rgba(16,24,40,.06) }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Segoe UI", Roboto, Arial, sans-serif;color:var(--ink);background:var(--bg)}
+    .wrap{max-width:380px;margin:60px auto;padding:24px;background:var(--card);border-radius:12px;box-shadow:var(--soft)}
+    h1{margin:0 0 12px 0;font-size:20px}
+    .sub{margin:0 0 16px 0;color:var(--muted);font-size:13px}
+    .lbl{display:block;margin:12px 0 6px 0}
+    input{width:100%;padding:10px 12px;border:1px solid #dbe5f0;border-radius:8px}
+    button.btn{width:100%;margin-top:14px;padding:10px 12px;background:var(--blue);color:#fff;border:none;border-radius:8px;cursor:pointer}
+    .row-actions{display:flex;gap:10px;margin-top:12px;justify-content:space-between}
+    .link-btn{display:inline-block;text-align:center;flex:1;padding:10px 12px;border-radius:8px;text-decoration:none;font-weight:600;border:1px solid #dbe5f0;background:#fff;color:#1e5aa0}
+    .link-btn:hover{background:#f2f7fc}
+    .aux{margin-top:10px;text-align:right}
+    .aux a{color:#1e5aa0;text-decoration:none}
+    .aux a:hover{text-decoration:underline}
+    .msg-ok{color:#0f5132;background:#d1e7dd;padding:8px 12px;border-radius:6px;margin-bottom:10px}
+    .msg-err{color:#842029;background:#f8d7da;padding:8px 12px;border-radius:6px;margin-bottom:10px}
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <h1>Sign in to Connect‑X</h1>
+    <p class="sub">Use your department credentials to continue.</p>
+
+    <!-- Flash messages -->
+    <p th:if="${msg}" class="msg-ok" th:text="${msg}">You have been logged out.</p>
+    <p th:if="${error}" class="msg-err" th:text="${error}">Invalid username or password.</p>
+
+    <!-- ✅ Proper form tag with th:action -->
+    <form th:action="@{/login}" method="post">
+      <label class="lbl" for="username">Username</label>
+      <input id="username" name="username" type="text" required />
+
+      <label class="lbl" for="password">Password</label>
+      <input id="password" name="password" type="password" required />
+
+      <button class="btn" type="submit">Login</button>
+
+      <!-- ✅ Register + Login as Staff (side-by-side) with th:href -->
+      <div class="row-actions">
+        <a th:href="@{/register}" class="link-btn">Register</a>
+        <a th:href="@{/staff-login}" class="link-btn">Login as Staff</a>
+      </div>
+
+      <!-- ✅ Forgot password below -->
+      <div class="aux">
+        <a th:href="@{/forgot-password}">Forgot password?</a>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
