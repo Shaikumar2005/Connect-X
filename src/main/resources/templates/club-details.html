@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Club Details</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #003366;
+        }
+
+        .description {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background: #003366;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        
+        .incharge-section {
+    display: flex;
+    gap: 30px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.person-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    width: 220px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.person-card:hover {
+    transform: translateY(-5px);
+}
+
+.person-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.person-card h3 {
+    margin-top: 10px;
+    color: #003366;
+}
+
+.section-title {
+    margin-top: 30px;
+    color: #003366;
+    border-left: 5px solid #007bff;
+    padding-left: 10px;
+}
+
+.incharge-row {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.person-box {
+    width: 200px;
+    background: white;
+    border-radius: 12px;
+    text-align: center;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: 0.3s;
+}
+
+.person-box:hover {
+    transform: translateY(-6px);
+}
+
+.person-box img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.person-box h4 {
+    margin-top: 10px;
+    color: #003366;
+}
+
+.person-box p {
+    font-size: 14px;
+    color: gray;
+}
+    </style>
+</head>
+
+<body>
+
+<!-- STAFF INCHARGES -->
+<h2 class="section-title">👨‍🏫 Staff Incharges</h2>
+
+<div class="incharge-row">
+
+    <div class="person-box">
+        <img th:src="@{'/clubs/' + ${clubKey} + '/staff1.jpg'}">
+        <h4>Dr. A. Vijayaraj</h4>
+        <p>Faculty Coordinator</p>
+    </div>
+
+    
+</div>
+
+
+<!-- STUDENT INCHARGES -->
+<h2 class="section-title">🎓 Student Incharges</h2>
+
+<div class="incharge-row">
+
+    <div class="person-box">
+        <img th:src="@{'/clubs/' + ${clubKey} + '/student1.jpg'}">
+        <h4>Shai Kumar R</h4>
+        <p>Head</p>
+    </div>
+
+    <div class="person-box">
+        <img th:src="@{'/clubs/' + ${clubKey} + '/student2.jpg'}">
+        <h4>Yadhu krishna U S</h4>
+        <p>President</p>
+    </div>
+
+</div>
+
+</body>
+</html>

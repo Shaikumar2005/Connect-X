@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -183,6 +184,35 @@ public String logout(HttpSession session, RedirectAttributes ra) {
     @GetMapping("/gallery")
     public String defaultGallery() {
         return "redirect:/gallery/events";
+    }
+    
+    @GetMapping("/clubs")
+    public String clubsPage() {
+        return "clubs";
+    }
+
+    @GetMapping("/clubs/{club}")
+    public String clubDetails(@PathVariable String club, Model model) {
+
+        String folderPath = "src/main/resources/static/clubs/" + club;
+
+        File folder = new File(folderPath);
+        List<String> images = new ArrayList<>();
+
+        if (folder.exists()) {
+            for (File file : folder.listFiles()) {
+                images.add(file.getName());
+            }
+        }
+
+        model.addAttribute("images", images);
+        model.addAttribute("clubKey", club);
+
+        // Dynamic Name & Description
+        model.addAttribute("clubName", club.toUpperCase() + " CLUB");
+        model.addAttribute("description", "This is " + club + " club where students actively participate in events and activities.");
+
+        return "club-details";
     }
 
     
