@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
+	
 
     private final UserRepository repo;
     private final PasswordEncoder encoder;
@@ -39,4 +40,6 @@ public class UserService {
                 .map(u -> encoder.matches(rawPassword, u.getPasswordHash()))
                 .orElse(false);
     }
+
+   
 }

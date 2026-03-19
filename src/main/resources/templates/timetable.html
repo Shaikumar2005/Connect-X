@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Connect‑X | Timetable</title>
+
+<style>
+    body { margin:0; background:#f4f7fb; font-family:Segoe UI,Arial; }
+    .container { max-width:1200px; margin:0 auto; padding:20px; }
+    
+    h1 {
+        color:#0f3560; font-size:28px; margin-bottom:8px; font-weight:800;
+    }
+    .sub {
+        color:#6b7280; margin-top:-4px; margin-bottom:20px;
+    }
+
+    /* Tabs */
+    .tabs {
+        display:flex; gap:14px; margin-bottom:20px; flex-wrap:wrap;
+    }
+    .tab {
+        padding:10px 18px;
+        background:#dfe9f7;
+        border-radius:8px;
+        font-weight:600;
+        cursor:pointer;
+    }
+    .tab.active {
+        background:#0f3560;
+        color:#fff;
+    }
+
+    /* Cards */
+    .card {
+        background:#fff; padding:18px 22px;
+        border-radius:14px;
+        margin-bottom:24px;
+        box-shadow:0 6px 16px rgba(16,24,40,.08);
+    }
+
+    h2 { color:#0f3560; margin-bottom:10px; }
+
+    table {
+        width:100%; border-collapse:collapse; margin-top:15px;
+    }
+    th, td {
+        border:1px solid #d8e3f3; padding:10px; text-align:center; font-size:14px;
+    }
+    th { background:#1e6ab6; color:#fff; }
+
+    .download-btn {
+        background:#0f3560; color:#fff; padding:10px 16px;
+        border-radius:8px; text-decoration:none; font-weight:600;
+        display:inline-block; margin-top:10px;
+    }
+
+    /* Faculty mini cards */
+    .faculty-grid {
+        display:grid; grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+        gap:14px; margin-top:16px;
+    }
+    .faculty {
+        padding:14px; background:#f9fbff;
+        border:1px solid #dce7f5; border-radius:10px;
+    }
+    .faculty strong { color:#0f3560; }
+</style>
+
+<script>
+    function showTab(tabId){
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        document.querySelectorAll(".year").forEach(y => y.style.display = "none");
+
+        document.getElementById("tab_"+tabId).classList.add("active");
+        document.getElementById("year_"+tabId).style.display = "block";
+    }
+</script>
+
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Department Timetable</h1>
+    <p class="sub">Academic Year 2025–26 • Department of Information Technology</p>
+
+   <!-- Download Button -->
+        <a class="download-btn" th:href="@{/timetable/Time-Table.doc}" download>
+            ⬇ Download Full Timetable (DOC)
+        </a>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" id="tab_2" onclick="showTab(2)">II Year</div>
+        <div class="tab" id="tab_3" onclick="showTab(3)">III Year</div>
+        <div class="tab" id="tab_4" onclick="showTab(4)">IV Year</div>
+    </div>
+
+    <!-- YEAR — II -->
+    <section id="year_2" class="year" style="display:block;">
+        <div class="card">
+            <h2>II Year • Semester 4 – Section A</h2>
+            <p><strong>Class Advisor:</strong> Dr. Saravanan K</p>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Day</th><th>1</th><th>2</th><th>3</th>
+                    <th>4</th><th>5</th><th>6</th><th>7</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td>Tuesday</td><td>24CS402</td><td>24MA401</td><td>24CS402</td><td>24IT901</td><td>24CS411</td><td></td><td></td></tr>
+                <tr><td>Wednesday</td><td>24MA401</td><td>24IT401</td><td>24CS402</td><td>24MA401</td><td>24IT402</td><td>Sports/VE</td><td></td></tr>
+                <tr><td>Thursday</td><td>24IT402</td><td>24CS402</td><td>24MA401</td><td>24CS411</td><td>24IT401</td><td>24ME411</td><td></td></tr>
+                <tr><td>Friday</td><td>24IT901</td><td>24IT401</td><td>24IT402</td><td>24MA401</td><td>Library</td><td>NPTEL</td><td></td></tr>
+                <tr><td>Saturday</td><td>24IT401</td><td>24MA401</td><td>24IT901</td><td>24IT402</td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3 style="color:#0f3560;">Faculty Handling Subjects (Section A)</h3>
+
+            <div class="faculty-grid">
+                <div class="faculty"><strong>Dr. S. Senthil</strong><br>24MA401 — Probability & Statistics</div>
+                <div class="faculty"><strong>Dr. T. Mahalingam</strong><br>24CS402 — DAA</div>
+                <div class="faculty"><strong>Ms. K. Selvi</strong><br>24IT401 — Cloud & Containers</div>
+                <div class="faculty"><strong>Ms. M.K. Parameshwari</strong><br>24IT402 — Web Frameworks</div>
+                <div class="faculty"><strong>Dr. R. Poornima</strong><br>24IT901 — Software Testing</div>
+                <div class="faculty"><strong>Dr. A. Annalakshmi</strong><br>24ME411 — PD Lab 2, Dev-Ops</div>
+                <div class="faculty"><strong>Mr. S. Nagarajan</strong><br>24CS411 — Aptitude II, Digital Marketing</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YEAR — III -->
+    <section id="year_3" class="year" style="display:none;">
+        <div class="card">
+            <h2>III Year • Semester 6 – Section A</h2>
+            <p><strong>Class Advisor:</strong> Dr. A. Anna Lakshmi</p>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Day</th><th>1</th><th>2</th><th>3</th>
+                    <th>4</th><th>5</th><th>6</th><th>7</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr><td>Tuesday</td><td>22IT957</td><td>Placement</td><td>22CB003</td><td>22IT958</td><td>22IT602/603</td><td>Sports</td><td></td></tr>
+                <tr><td>Wednesday</td><td>22IT602</td><td>22IT957</td><td>22CB003</td><td>22IT603</td><td>22CD004</td><td>Lab</td><td></td></tr>
+                <tr><td>Thursday</td><td>22CD004</td><td>22IT957</td><td>22IT602</td><td>22CB003</td><td>22IT958</td><td>22CS611</td><td></td></tr>
+                <tr><td>Friday</td><td>22IT603</td><td>22IT602</td><td>22CB003</td><td>22CD004</td><td>Library</td><td>Lab</td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- YEAR — IV -->
+    <section id="year_4" class="year" style="display:none;">
+        <div class="card">
+            <h2>IV Year • Semester 8</h2>
+            <p><strong>Class Advisor:</strong> Dr. A. Vijayaraj</p>
+            <p>This year has project work, industry training, and elective courses.</p>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>

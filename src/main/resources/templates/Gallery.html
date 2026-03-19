@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Department Gallery</title>
+    
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #003366;
+        }
+
+        .categories a {
+            padding: 10px 20px;
+            margin-right: 10px;
+            background: #003366;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .active {
+            background: orange !important;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📸 Department Gallery</h1>
+
+<div class="categories">
+    <a th:href="@{/gallery/events}" 
+       th:classappend="${type=='events'} ? 'active'">Events</a>
+
+    <a th:href="@{/gallery/Achievers}" 
+       th:classappend="${type=='Achievers'} ? 'active'">Achievers</a>
+
+    <a th:href="@{/gallery/faculty}" 
+       th:classappend="${type=='faculty'} ? 'active'">Faculty</a>
+</div>
+
+<div class="gallery">
+    <div th:each="img : ${images}">
+        <img th:src="@{'/Gallery/' + ${type} + '/' + ${img}}">
+    </div>
+</div>
+
+</body>
+</html>

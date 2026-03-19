@@ -8,7 +8,10 @@ public class User {
 
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 20, message = "Username must be 3–20 characters")
-    private String username;
+    private String username;   // login username
+
+    @NotBlank(message = "Full name is required")
+    private String name;       // ⭐ NEW: actual display name
 
     @NotBlank(message = "Email is required")
     @Email(message = "Enter a valid email")
@@ -18,9 +21,12 @@ public class User {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    // Getters/Setters
+    // Getters and Setters
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }

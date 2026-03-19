@@ -7,6 +7,10 @@ import jakarta.validation.Valid;
 // Optional if you want to keep username in session:
 // import jakarta.servlet.http.HttpSession;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -131,4 +135,76 @@ public String logout(HttpSession session, RedirectAttributes ra) {
 
         return "home"; // ✅ renders src/main/resources/templates/home.html
     }
+    
+    @GetMapping("/Gallery")
+    private List<String> getImages(String type) {
+        List<String> images = new ArrayList<>();
+
+        String folderPath = "src/main/resources/static/Gallery/" + type;
+
+        File folder = new File(folderPath);
+
+        if (folder.exists() && folder.isDirectory()) {
+            for (File file : folder.listFiles()) {
+                if (file.isFile()) {
+                    images.add(file.getName());
+                }
+            }
+        }
+
+        return images;
+    }
+    
+    // EVENTS
+    @GetMapping("/gallery/events")
+    public String showEvents(Model model) {
+        model.addAttribute("images", getImages("events"));
+        model.addAttribute("type", "events");
+        return "gallery";
+    }
+
+    // CONFERENCES
+    @GetMapping("/gallery/Achievers")
+    public String showConferences(Model model) {
+        model.addAttribute("images", getImages("Achievers"));
+        model.addAttribute("type", "Achievers");
+        return "gallery";
+    }
+
+    // FACULTY
+    @GetMapping("/gallery/faculty")
+    public String showFaculty(Model model) {
+        model.addAttribute("images", getImages("faculty"));
+        model.addAttribute("type", "faculty");
+        return "gallery";
+    }
+
+    // DEFAULT PAGE
+    @GetMapping("/gallery")
+    public String defaultGallery() {
+        return "redirect:/gallery/events";
+    }
+
+    
+
+@GetMapping("/forms")
+public String formsPage(Model model) {
+    model.addAttribute("title", "Download Forms");
+    return "forms";
 }
+
+    
+
+@GetMapping("/timetable")
+public String timetablePage(Model model) {
+    return "timetable";  // loads timetable.html
+}
+
+
+
+
+
+    
+
+}
+

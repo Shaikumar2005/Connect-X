@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Download Forms</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f4f6f9;
+        }
+
+        h1 {
+            color: #003366;
+        }
+
+        .card {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .faq-item {
+            margin-bottom: 12px;
+        }
+
+        .faq-question {
+            font-weight: bold;
+            color: #003366;
+            cursor: pointer;
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 5px;
+            padding-left: 15px;
+        }
+
+        .help-btn {
+            background: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* Help Modal */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 999;
+            padding-top: 150px;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background: #fff;
+            margin: auto;
+            padding: 20px;
+            width: 35%;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .close {
+            float: right;
+            font-size: 22px;
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📄 Download Forms</h1>
+
+    <!-- Download Section -->
+<div class="card">
+    <h2>Available Forms</h2>
+    <ul>
+        <li>
+            <a href="/downloads/bonafide.pdf" download>
+                Bonafide Certificate
+            </a>
+        </li>
+
+        <li>
+            <a href="/downloads/leave-form.pdf" download>
+                Leave Application Form
+            </a>
+        </li>
+
+        <li>
+            <a href="/downloads/id-card.pdf" download>
+                ID Card Request Form
+            </a>
+        </li>
+        
+        <li>
+            <a href="/downloads/IDEA-LAB.pdf" download>
+                IDEA LAB Request Form
+            </a>
+        </li>
+    </ul>
+</div>
+
+    <!-- Instructions Section -->
+    <div class="card">
+        <h2>📝 Instructions</h2>
+        <p><strong>1. Bonafide Certificate</strong></p>
+        <ul>
+            <li>Enter your full name as per college records.</li>
+            <li>Do get Signature from HOD</li>
+            <li>Submit to: <b>Admin Office - Main Block GND Floor</b></li>
+        </ul>
+
+        <p><strong>2. Leave Application Form</strong></p>
+        <ul>
+            <li>Provide valid reason for leave.</li>
+            <li>Attach medical certificate if applicable.</li>
+            <li>Submit to: <b>Class Advisor</b></li>
+        </ul>
+
+        <p><strong>3. ID Card Request Form</strong></p>
+        <ul>
+            <li>Upload/attach passport-size photo.</li>
+            <li>Include enrollment number correctly.</li>
+            <li>Submit to: <b>Admin Block – Main Block GND Floor</b></li>
+        </ul>
+        
+        <p><strong>3. IDEA LAB Request Form</strong></p>
+        <ul>
+            <li>Get a Form from DEO IT</li>
+            <li>Fill it and get signatures from Authorities mentioned in FORM </li>
+            <li>Submit to: <b>IDEA LAB I Incharge</b></li>
+        </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="card">
+        <h2>📞 Contact Details</h2>
+        <p><b>IT Department Office</b></p>
+        <p>Room 207, IT Block</p>
+        <p>Email: deo.it@rmkec.ac.in</p>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="card">
+        <h2>❓ Frequently Asked Questions (FAQ)</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">➡ How long does it take to get the Bonafide Certificate?</div>
+            <div class="faq-answer">Usually 2 to 3 working days.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">➡ Can I submit forms online?</div>
+            <div class="faq-answer">Yes, selected forms can be emailed to the department office.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">➡ What to do if I lose my ID card?</div>
+            <div class="faq-answer">Submit an ID Card Request Form and pay the replacement fee.</div>
+        </div>
+    </div>
+
+    <!-- Help Button -->
+    <button class="help-btn" onclick="openHelp()">Need Help?</button>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeHelp()">&times;</span>
+            <h2>Help & Support</h2>
+            <p>If you face issues downloading or submitting forms, contact the IT office or send an email:</p>
+            <p><b>Email:</b> deo.it@rmkec.ac.in</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle FAQ
+        document.querySelectorAll(".faq-question").forEach(q => {
+            q.addEventListener("click", () => {
+                let ans = q.nextElementSibling;
+                ans.style.display = ans.style.display === "block" ? "none" : "block";
+            });
+        });
+
+        // Modal JS
+        function openHelp() {
+            document.getElementById("helpModal").style.display = "block";
+        }
+        function closeHelp() {
+            document.getElementById("helpModal").style.display = "none";
+        }
+        window.onclick = function(event) {
+            let modal = document.getElementById("helpModal");
+            if (event.target === modal) modal.style.display = "none";
+        }
+    </script>
+
+</body>
+</html>
