@@ -71,33 +71,59 @@
   <h1>Students – Publications</h1>
   <p class="muted">Batch-wise research highlights and publication records.</p>
 
-  <!-- =============== Top Student (You) =============== -->
-  <div class="card top-student">
-    <div class="hd">Top Student in College (by publication record)</div>
-    <div class="top-wrap">
+ <div class="card top-student">
+  <div class="hd">Top Student in College (by publication record)</div>
 
-      <!-- Your Photo -->
-      <img th:src="@{/images/research/Shai Kumar R.jpg}" alt="Shaikumar R photo"
-           onerror="this.onerror=null;this.src='/images/no-photo.png';"/>
+  <div class="top-wrap">
 
-      <div class="top-details">
-        <div class="top-name">Shai Kumar R</div>
-        
-        <div class="top-meta">
-          <span class="chip">9 Published</span>
-          <span class="chip chip-warn">2 To be published</span>
-          <a class="chip chip-link" href="https://ieeexplore.ieee.org/author/855606853958716"
-             target="_blank" rel="noopener">IEEE Profile ↗</a>
-        </div>
-        <p class="top-desc">
-          Passionate about applied AI, embedded systems, and assistive technologies. Led multiple
-          projects in computer vision and IoT—focusing on <em>sensor fusion</em>, <em>real‑time analytics</em>,
-          and <em>human‑centric design</em>. Current work spans PWA architectures, edge inference, and
-          practical AI deployments that create impact for campus and community users.
-        </p>
+    <!-- Photo -->
+    <img src="/images/research/Shai Kumar R.jpg"
+         alt="Shaikumar R"
+         onerror="this.onerror=null;this.src='/images/no-photo.png';"/>
+
+    <div class="top-details">
+      <div class="top-name">Shai Kumar R</div>
+
+      <div class="top-meta">
+        <span class="chip">9 Published</span>
+        <span class="chip chip-warn">2 To be published</span>
+        <a class="chip chip-link" 
+           href="https://ieeexplore.ieee.org/author/855606853958716"
+           target="_blank" rel="noopener">
+          IEEE Profile ↗
+        </a>
       </div>
+      <p class="top-desc">
+        Passionate about applied AI, embedded systems, and assistive technologies. Led multiple
+        projects in computer vision and IoT—focusing on <em>sensor fusion</em>, 
+        <em>real-time analytics</em>, and <em>human‑centric design</em>. 
+        Current work spans PWA architectures, edge inference, and practical AI deployments 
+        that create impact for campus and community users.
+      </p>
+
+      <!-- ✅ Your Research Papers Listed as Links -->
+      <div class="paper-list">
+        <h4>Research Publications</h4>
+        <ul>
+          <li><a href="https://ieeexplore.ieee.org/document/11394692/" target="_blank">Face Liveness Detector: An Innovative Approach for Capturing Face and Hand-Gestures</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11233273/" target="_blank">Automated Diagnosis of Breast Cancer using Deep Learning Algorithm</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11209706/" target="_blank">Enhanced Intelligent Attendance Management System for Smart Campus Using Computer Vision</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11200535/" target="_blank">A Gesture-based Mobile Platform for Accessible Education</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11200576/" target="_blank">AI Powered Virtual Assistant for Enhanced Accessibility in the Visually Impaired Community</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11200924/" target="_blank">A Comprehensive Analysis of Cloud-Edge-IoT Collaboration for Scalable and Instantaneous Uses</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/11042515/" target="_blank">Artificial Intelligence Enhanced Virtual Reality Surgery Training7</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/10810982/" target="_blank">A Comparative Analysis on AI-Driven Speech Protection Approaches</a></li>
+          <li><a href="https://ieeexplore.ieee.org/document/10560460/" target="_blank">A Sentimental Analysis Approach for Personalized Drug Recommendations Using Machine Learning</a></li>
+
+         
+        </ul>
+      </div>
+
+      
     </div>
   </div>
+</div>
+
 
   <!-- =============== Other Students =============== -->
   <div class="card">
@@ -116,22 +142,23 @@
   const otherStudents = [
     {
       name: "Vigneshwaran N",
-      photo: "student-a.jpg",
+      photo: "Vigneshwaran N.png",
       publications: [
-        { title: "Efficient Vision Transformer for Edge Devices", venue: "ICCC 2025", link: "" },
-        { title: "TinyML Sensing for Smart Campus", venue: "Sensors Journal", link: "" }
+        { title: "Machine Learning-powered Job Offer Verification", venue: "(ICDSAAI)", link: "https://ieeexplore.ieee.org/document/11011776/" },
+        { title: "Cognitive Large Language Model in Social Media with Local Memory", venue: "(ICDSAAI)", link: "https://ieeexplore.ieee.org/document/11011588/" }
       ]
     },
     {
-      name: "Student B",
-      photo: "student-b.jpg",
+      name: "Tharun Kumar S",
+      photo: "Tharun Kumar S.jpg",
       publications: [
-        { title: "Federated Learning for Healthcare", venue: "IJAI 2025", link: "" }
+        { title: "Pyrolysis Based Fuel Production: A Green Alternative to Conventional Energy", venue: "(ICCDS)", link: "https://ieeexplore.ieee.org/document/11209692/" },
+        { title: "Artificial Intelligence Enhanced Virtual Reality Surgery Training", venue: "(RMKMATE)", link: "https://ieeexplore.ieee.org/document/11042515/" }
       ]
     },
     {
-      name: "Student C",
-      photo: "student-c.jpg",
+      name: "Sugumar M S",
+      photo: "Sugumar M S.jpg",
       publications: [
         { title: "PWA-based Real-time Navigation", venue: "Tech Symposium 2025", link: "" }
       ]
