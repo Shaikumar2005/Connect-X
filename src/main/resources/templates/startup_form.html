@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Your Startup Idea</title>
+
+   <style>
+    body {
+        font-family: "Segoe UI", Roboto, Arial, sans-serif;
+        background: #f5f7fa;
+        margin: 0;
+        padding: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+    }
+
+    .container {
+        width: 60%;
+        max-width: 700px;
+        background: white;
+        padding: 40px;
+        margin-top: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        animation: fadeIn 0.5s ease;
+    }
+
+    h2 {
+        text-align: center;
+        color: #0a3d62;
+        margin-bottom: 25px;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    label {
+        font-weight: 600;
+        color: #34495e;
+        display: block;
+        margin-bottom: 6px;
+        font-size: 15px;
+    }
+
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #dcdde1;
+        border-radius: 8px;
+        font-size: 15px;
+        margin-bottom: 20px;
+        transition: 0.3s;
+    }
+
+    input:focus, textarea:focus {
+        border-color: #0984e3;
+        background: #f0faff;
+        outline: none;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    button {
+        width: 100%;
+        background: #0984e3;
+        border: none;
+        padding: 14px;
+        color: white;
+        font-size: 17px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    button:hover {
+        background: #0652dd;
+        transform: translateY(-2px);
+    }
+
+    /* View Startup List Button */
+    .list-btn {
+        width: 100%;
+        margin-top: 10px;
+        background: #6c5ce7;
+        border: none;
+        padding: 14px;
+        color: white;
+        font-size: 17px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+    }
+
+    .list-btn:hover {
+        background: #4b38c2;
+        transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+   </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Submit Your Startup Idea</h2>
+
+    <form action="/startup/save" method="post">
+
+        <label>Student ID:</label>
+        <input type="number" name="studentId" required>
+
+        <label>Name:</label>
+        <input type="text" name="studentName" required>
+
+        <label>Idea Title:</label>
+        <input type="text" name="ideaTitle" required>
+
+        <label>Description:</label>
+        <textarea name="ideaDescription" rows="5" required></textarea>
+
+        <label>Skills Required:</label>
+        <input type="text" name="skillsRequired">
+
+        <label>Contact Email:</label>
+        <input type="email" name="contactEmail" required>
+
+        <label>Mobile Number:</label>
+        <input type="text" name="mobileNumber" required placeholder="Enter mobile number">
+
+        <!-- ⭐ Mentor Name Optional Field Added -->
+        <label>Mentor Name (Optional):</label>
+        <input type="text" name="mentorName" placeholder="Enter mentor name OR leave empty">
+
+        <button type="submit">Submit Idea</button>
+
+        <!-- Navigate to Startup List -->
+        <button type="button" class="list-btn" onclick="window.location.href='/startup/list'">
+            See Startup List
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

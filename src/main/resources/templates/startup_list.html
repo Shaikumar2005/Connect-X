@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Startup Ideas</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Roboto, Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1100px;
+            margin-top: 40px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.4s ease;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0a3d62;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        th {
+            background: #f1f4f8;
+            padding: 14px;
+            text-align: left;
+            font-weight: 700;
+            color: #2d3436;
+            border-bottom: 2px solid #dfe6e9;
+        }
+
+        td {
+            padding: 12px;
+            color: #2d3436;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        tr:hover {
+            background: #f8fbff;
+            transition: 0.2s;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-decoration: none;
+            color: white;
+            margin-right: 5px;
+        }
+
+        .btn-update {
+            background-color: #0984e3;
+        }
+
+        .btn-update:hover {
+            background-color: #0652dd;
+        }
+
+        .btn-delete {
+            background-color: #d63031;
+        }
+
+        .btn-delete:hover {
+            background-color: #b42121;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Student Startup Ideas</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Student</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Skills Needed</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Actions</th>
+            <th>Mobile</th>
+            
+        </tr>
+
+        <tr th:each="idea : ${ideas}">
+            <td th:text="${idea.id}"></td>
+            <td th:text="${idea.studentName}"></td>
+            <td th:text="${idea.ideaTitle}"></td>
+            <td th:text="${idea.ideaDescription}"></td>
+            <td th:text="${idea.skillsRequired}"></td>
+            <td th:text="${idea.contactEmail}"></td>
+            <td th:text="${idea.createdAt}"></td>
+            <td th:text="${idea.mobileNumber}"></td>
+
+            <td>
+                <a th:href="@{'/startup/edit/' + ${idea.id}}" class="btn btn-update">Update</a>
+        </tr>
+    </table>
+
+</div>
+
+</body>
+</html>

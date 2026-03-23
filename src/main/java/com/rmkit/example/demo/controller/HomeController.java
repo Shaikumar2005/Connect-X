@@ -86,13 +86,10 @@ public String logout(HttpSession session, RedirectAttributes ra) {
         return "login";
     }
 
-    /* -----------------
-       Registration flow
-       ----------------- */
     @GetMapping("/register")
     public String registerPage(Model model) {
         model.addAttribute("user", new User());
-        return "register"; // renders templates/register.html
+        return "register";
     }
 
     @PostMapping("/register")
@@ -107,19 +104,11 @@ public String logout(HttpSession session, RedirectAttributes ra) {
         try {
             userService.register(user);
         } catch (IllegalArgumentException ex) {
-            String msg = ex.getMessage() == null ? "" : ex.getMessage().toLowerCase();
-            if (msg.contains("username")) {
-                bindingResult.rejectValue("username", "exists", ex.getMessage());
-            } else if (msg.contains("email")) {
-                bindingResult.rejectValue("email", "exists", ex.getMessage());
-            } else {
-                model.addAttribute("formError", ex.getMessage());
-            }
+            model.addAttribute("formError", ex.getMessage());
             return "register";
         }
 
-        // Registration ok → show login page with a message
-        model.addAttribute("msg", "Registration successful. Please log in.");
+        model.addAttribute("msg", "Registration successful! Please log in.");
         return "login";
     }
 

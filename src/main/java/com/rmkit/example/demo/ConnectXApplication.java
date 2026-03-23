@@ -1,5 +1,4 @@
 package com.rmkit.example.demo;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,5 +8,4 @@ public class ConnectXApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ConnectXApplication.class, args);
 	}
-
 }
